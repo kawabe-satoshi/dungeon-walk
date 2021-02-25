@@ -15,7 +15,9 @@
 			:depends-on ("sprite"))
                  (:file "globals"
                         :depends-on ("sprite" "fonts"))
-		 (:file "initialize"
+		 (:file "screen"
 			:depends-on ("sprite" "fonts" "globals"))
+		 (:file "initialize"
+			:depends-on ("sprite" "fonts" "globals" "screen"))
                  (:file "main"
-                        :depends-on ("initialize" "sprite" "fonts" "globals"))))
+                        :depends-on ("initialize" "sprite" "fonts" "globals" "screen"))))
