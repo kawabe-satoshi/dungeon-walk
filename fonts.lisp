@@ -121,6 +121,7 @@
 ;;;; フォント表示
 ;;;;
 
+;;; 現在のFont-objのカーソル位置を(x,y)に設定する。
 (defun goto-xy (x y font-obj)
   (setf (font-x font-obj) x)
   (setf (font-y font-obj) y))
@@ -142,7 +143,15 @@
 (defun y-pixel (font-obj)
   (* (font-y font-obj) (font-size font-obj)))
 
+;;;; 現在のfont-objのカーソル位置を画面上のピクセルに変更して、
+;;;; (x y)のリストにして返す。
+;;;; 使いかた：
+;;;;    (goto-xy x y font-obj)
+;;;;    (xy-pixel) -> 返り値に(x-pixel y-pixel)が返る。
 
+(defun xy-pixel (font-obj)
+  (list (x-pixel font-obj) (y-pixel font-obj)))
+		 
 ;;; 文字/文字列表示の本体
 (defun draw-letter (letter font-obj)
   (sdl:draw-surface-at-* (font-img font-obj)
