@@ -42,6 +42,7 @@
 ;;; SCREEN
 
 (defparameter *bg-color* sdl:*white*)
+(defparameter *fg-color* sdl:*black*)
 
 ;;;;; ----------------------------
 ;;;;; Basic Tools
