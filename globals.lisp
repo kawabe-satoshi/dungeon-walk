@@ -38,6 +38,11 @@
 (defconstant +green-circle+  14)
 (defconstant +yellow-circle+ 15)
 
+
+;;; SCREEN
+
+(defparameter *bg-color* sdl:*white*)
+
 ;;;;; ----------------------------
 ;;;;; Basic Tools
 ;;;;; ----------------------------
