@@ -15,9 +15,10 @@
 
 (defun update-screen ()
   (sdl:fill-surface sdl:*white* :surface sdl:*default-display*)
-  (goto-xy 0 0 *gothic16*)
-  (draw-string "こんにちは! みなさん!" *gothic16*)
-  (draw-string "  それからね、これはつづきなんだけどs...." *gothic16*)
+  (goto-xy 33 10 *gothic16*)
+  (draw-string "Dungeon Walk" *gothic16*)
+  (goto-xy 35 11 *gothic16*)
+  (draw-string "Ver. 0.1" *gothic16*)
   (sdl:update-display))
 
 ;;;;
