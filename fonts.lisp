@@ -92,8 +92,6 @@
   (let ((result nil)
 	(row 0))
     (dolist (i *all-set*)
-      (print i)
-      (print row)
       (if (or (eql i *ascii-set*)
 	      (eql i *hankaku-kigou*))
 	  (setf result (append result (cells-of-line i size row t)))
