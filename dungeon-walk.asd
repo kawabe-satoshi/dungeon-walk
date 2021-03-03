@@ -11,13 +11,36 @@
     :serial     t
     :components (
 		 (:file "sprite")
+		 
                  (:file "fonts"
-			:depends-on ("sprite"))
-                 (:file "globals"
-                        :depends-on ("sprite" "fonts"))
+		  :depends-on ("sprite"))
+
+		 (:file "globals"
+                  :depends-on ("sprite"
+			       "fonts"))
+		 
 		 (:file "screen"
-			:depends-on ("sprite" "fonts" "globals"))
+		  :depends-on ("sprite"
+			       "fonts"
+			       "globals"))
+
 		 (:file "initialize"
-			:depends-on ("sprite" "fonts" "globals" "screen"))
-                 (:file "main"
-                        :depends-on ("initialize" "sprite" "fonts" "globals" "screen"))))
+		  :depends-on ("sprite"
+			       "fonts"
+			       "globals"
+			       "screen"))
+		 
+		 (:file "main-title"
+		  :depends-on ("sprite"
+			       "fonts"
+			       "globals"
+			       "screen"
+			       "initailize"))
+
+		 (:file "main"
+                  :depends-on ("main-title"
+			       "initialize"
+			       "sprite"
+			       "fonts"
+			       "globals"
+			       "screen"))))

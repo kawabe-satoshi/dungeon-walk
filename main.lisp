@@ -23,14 +23,12 @@
 ;;;;
 
 (defun main-loop ()
-  (sdl:with-events ()
-    (:quit-event () t)
-    (:key-down-event (:key key)
-		     (key-down-handler key))
-    (:key-up-event (:key key)
-		   (key-up-handler key))
-    (:idle
-     (update-screen))))
+  (case *game-mode*
+    (:main-title
+     (main-title))
+    (otherwise
+     ())))
+     
 
 ;;;;;
 

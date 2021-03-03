@@ -7,15 +7,14 @@
 
 ;;; GAME CONTROL
 (defparameter *quit-game* nil)
-(defparameter *game-mode* :title)
-(defparameter *counter* 0)
-(defparameter *cursor-x* 1)
+
+(defparameter *game-mode* :main-title) ; mode-> :main-title :castle :trading-post :inn :tavern :temple :training :option
 
 ;;; DUNGEON DATA
 (defparameter *dungeon-data* (make-hash-table))
 
-(defparameter *single-key* '("name" "max-stories" "entrance"))
-(defparameter *double-key* '("message" "event" "locked-door" "map"))
+;(defparameter *single-key* '("name" "max-stories" "entrance"))
+;(defparameter *double-key* '("message" "event" "locked-door" "map"))
 
 
 ;;; SPRITE
