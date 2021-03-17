@@ -14,15 +14,11 @@
 ;;;;
 
 (defun update-screen ()
-  (sdl:fill-surface sdl:*blue* :surface sdl:*default-display*)
-  (draw-sprite *sprite-object* 0 *cursor-x* 1)
-  (incf *counter*)
-  (if (= *counter* 15)
-      (progn
-	(incf *cursor-x*)
-	(setf *counter* 0)))
-  (sdl:update-display)
-  )
+  (sdl:fill-surface sdl:*white* :surface sdl:*default-display*)
+  (goto-xy 0 0 *gothic16*)
+  (draw-string "こんにちは! みなさん!" *gothic16*)
+  (draw-string "  それからね、これはつづきなんだけどs...." *gothic16*)
+  (sdl:update-display))
 
 ;;;;
 
@@ -41,6 +37,7 @@
 (defun main ()
   (sdl:with-init ()
     (initialize)
+    (initialize-fonts)
     (loop
        (main-loop)
        (if *quit-game*

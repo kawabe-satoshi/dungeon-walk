@@ -20,6 +20,28 @@
 
 (defconstant +sprite-table-size+ 16) ; 0-15までの16個をタテヨコのサイズとする。16x16
 
+;;; Basic Shapes
+(defparameter *sprite-sheet* nil)
+
+(defconstant +white-square+  0)
+(defconstant +black-square+  1)
+(defconstant +red-square+    2)
+(defconstant +purple-square+ 3)
+(defconstant +blue-square+   4)
+(defconstant +cyan-square+   5)
+(defconstant +green-square+  6)
+(defconstant +yellow-square+ 7)
+(defconstant +white-circle+  8)
+(defconstant +black-circle+  9)
+(defconstant +red-circle+    10)
+(defconstant +purple-circle+ 11)
+(defconstant +blue-circle+   12)
+(defconstant +cyan-circle+   13)
+(defconstant +green-circle+  14)
+(defconstant +yellow-circle+ 15)
+
+
+
 ;;;;
 ;;;; Sprite Object
 ;;;;

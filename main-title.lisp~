@@ -1,0 +1,13 @@
+
+
+(defun draw-main-title ()
+  (fill-screen sdl:*black*)
+  (goto-xy 10 10 *gothic16*)
+  (draw-string "[M A I N   T I T L E]" *gothic16*)
+  (sdl:update-display))
+
+(defun main-title ()
+  (draw-main-title)
+  (loop-until-pressed-any-key)
+  (setf *game-mode* :castle))
+
