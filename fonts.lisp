@@ -119,6 +119,7 @@
 ;;;; フォント表示
 ;;;;
 
+<<<<<<< HEAD
 ;;; 以下の関数は、全て *current-font* を対象に実行される。
 ;;; 先に set-current-font しておくこと。
 ;;; 例: (set-current-font *gothic16*)
@@ -130,6 +131,12 @@
 (defun goto-xy (x y)
   (setf (font-x *current-font*) x)
   (setf (font-y *current-font*) y))
+=======
+;;; 現在のFont-objのカーソル位置を(x,y)に設定する。
+(defun goto-xy (x y font-obj)
+  (setf (font-x font-obj) x)
+  (setf (font-y font-obj) y))
+>>>>>>> 7950f8b17aed797f51d8fced58044bd0a85343f6
 
 ;;; フォントオブジェクトのカーソルXを、letterに応じて半角/全角分だけ移動させる。
 (defun next-x (letter)
@@ -148,14 +155,23 @@
 (defmacro y-pixel (f)
   `(* (font-y ,f) (font-size ,f)))
 
+<<<<<<< HEAD
 ;;;; 現在の*current-font*のカーソル位置を画面上のピクセルに変更して、
+=======
+;;;; 現在のfont-objのカーソル位置を画面上のピクセルに変更して、
+>>>>>>> 7950f8b17aed797f51d8fced58044bd0a85343f6
 ;;;; (x y)のリストにして返す。
 ;;;; 使いかた：
 ;;;;    (goto-xy x y font-obj)
 ;;;;    (xy-pixel) -> 返り値に(x-pixel y-pixel)が返る。
 
+<<<<<<< HEAD
 (defun xy-pixel ()
   (list (x-pixel *current-font*) (y-pixel *current-font*)))
+=======
+(defun xy-pixel (font-obj)
+  (list (x-pixel font-obj) (y-pixel font-obj)))
+>>>>>>> 7950f8b17aed797f51d8fced58044bd0a85343f6
 		 
 ;;; 文字/文字列表示の本体
 (defun draw-letter (letter)

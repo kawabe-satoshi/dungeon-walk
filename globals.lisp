@@ -68,6 +68,12 @@
 (defmacro screen-font-height ()
   `(/ *screen-height* (font-size      *current-font*)))
 
+
+;;; SCREEN
+
+(defparameter *bg-color* sdl:*white*)
+(defparameter *fg-color* sdl:*black*)
+
 ;;;;; ----------------------------
 ;;;;; Basic Tools
 ;;;;; ----------------------------
