@@ -5,12 +5,52 @@
 (defmacro fill-screen (color)
   `(sdl:fill-surface ,color :surface sdl:*default-display*))
 
-(defun draw-filled-frame (x y w h color font)
-  )
+(defun draw-frame (x1 y1 w h h-char v-char corner)
+  (let* ((x2 (+ x1 (1- w)))
+	 (y2 (+ y1 (1- h))))
+    
+    (draw-horizontal-line (1+ x1) y1 (- w 2) h-char)
+    (draw-horizontal-line (1+ x1) y2 (- w 2) h-char)
+    
+    (draw-vertical-line   x1 (1+ y1) (- h 2) v-char)
+    (draw-vertical-line   x2 (1+ y1) (- h 2) v-char)
+  
+    (goto-xy x1 y1)
+    (draw-string corner)
+    (goto-xy x2 y1)
+    (draw-string corner)
+    (goto-xy x1 y2)
+    (draw-string corner)
+    (goto-xy x2 y2)
+    (draw-string corner)))
 
-(defun draw-frame (x y w h color font)
-  )
+(defun draw-horizontal-line (x y w c)
+  (goto-xy x y)
+  (draw-string (format nil "~V@{~A~:*~}" w c)))
 
-(defun draw-horizontal-line (y c)
-  (goto-xy 0 y)
-  (draw-string (format nil "~V@{~A~:*~}" (screen-font-width) c)))
+(defun draw-vertical-line (x y h c)
+  (loop
+     for i from 0 to (1- h) do
+       (progn
+	 (goto-xy x (+ y i))
+	 (draw-string c))))
+
+;;;; CAPTION 2種類
+
+(defun center-caption (s)
+  (draw-frame 0 0
+  	      (screen-font-width)
+  	      3
+  	      "-" "!" "+")
+  (goto-xy 1 1)
+  (draw-string (format nil "~v:@<~a~>" (- (screen-font-width) 2) s))
+  (sdl:update-display))
+
+(defun both-side-caption (s1 s2)
+  (draw-frame 0 0
+	      (screen-font-width)
+	      3
+	      "-" "!" "+")
+  (goto-xy 1 1)
+  (draw-string (format nil "~v<~a~;~a~>" (- (screen-font-width) 2) s1 s2)))
+

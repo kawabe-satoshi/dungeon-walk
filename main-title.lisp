@@ -2,17 +2,14 @@
 
 (defun draw-main-title ()
   (fill-screen sdl:*white*)
-  (draw-horizontal-line 9 "-")
-  (goto-xy 10 10)
-  (draw-string "[M A I N   T I T L E]")
-  (draw-horizontal-line 11 "-")
-  (goto-xy 1 1)
-  (sdl:update-display)
+  (center-caption "[ M A I N  T I T L E ]")
   (print "draw-main-title"))
 
 (defun main-title ()
   (print "main-title")
+  (fill-screen sdl:*white*)
+  (sdl:update-display)
   (draw-main-title)
-  (loop-until-pressed :sdl-key-escape)
+  (loop-until-pressed-any-key)
   (setf *game-mode* :castle))
 

@@ -1,8 +1,5 @@
 (defun draw-main-menu-*castle* ()
-  (goto-xy 0 0)
-  (draw-string "C A S T L E")
-  (goto-xy 0 20)
-  (draw-string "A)dventure's Inn")
+  (both-side-caption "C A S T L E" "Adventure's INN")
   (goto-xy 0 21)
   (draw-string "[ESC] or L)eave")
   (sdl:update-display))
@@ -13,7 +10,7 @@
     (sdl:push-quit-event)))
   
 (defun castle-main ()
-  (fill-screen sdl:*blue*)
+  (fill-screen sdl:*white*)
   (draw-main-menu-*castle*)
   (loop 
      (sdl:with-events ()

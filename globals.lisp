@@ -114,6 +114,7 @@
 	   (sdl:update-display))))
 
 (defun loop-until-pressed-any-key ()
+  (print "loop-until-pressed-any-key")
   (sdl:with-events ()
     (:quit-event () t)
     (:key-down-event (:key k)
