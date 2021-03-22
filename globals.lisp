@@ -82,6 +82,11 @@
   (and (consp lst) (not (cdr lst))))
 
 
+(defun restart-game ()
+  (setf *quit-game* nil)
+  (setf *game-mode* :main-title)
+  (main))
+
 ;;; CONVERT SDL-Key TO CHAR
 
 (defparameter *sdl-alphabet-key-alist* '((:sdl-key-0 #\0) (:sdl-key-1 #\1) (:sdl-key-2 #\2)
