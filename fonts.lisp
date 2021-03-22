@@ -14,8 +14,13 @@
 ;;;; フォントテーブル設定
 ;;;;
 
+;;; --- 外部用大域変数
+
+(defparameter *current-font* nil)
 (defparameter *gothic32* nil)
 (defparameter *gothic16* nil)
+
+;;; --- 内部用大域変数
 
 (defparameter *font-table* (make-hash-table))
 
@@ -31,6 +36,9 @@
 			      *katakana-set*
 			      *zenkaku-sign1*
 			      *zenkaku-sign2*))
+
+;;; --------------------
+
 (defun set-font-table ()
   (let ((cell-index 0))
     (flet ((set-each-table (char-set)
@@ -41,14 +49,6 @@
       (dolist (i *all-set*)
 	(set-each-table i)))))
 
-;;;;
-;;;; 表示用カーソル情報(不要?)
-;;;;
-
-;(defparameter *x32* 0)
-;(defparameter *y32* 0)
-;defparameter *x16* 0)
-;(defparameter *y16* 0)
 
 ;;;;
 ;;;; フォントオブジェクト設定
@@ -92,8 +92,6 @@
   (let ((result nil)
 	(row 0))
     (dolist (i *all-set*)
-      (print i)
-      (print row)
       (if (or (eql i *ascii-set*)
 	      (eql i *hankaku-kigou*))
 	  (setf result (append result (cells-of-line i size row t)))
@@ -121,39 +119,55 @@
 ;;;; フォント表示
 ;;;;
 
-(defun goto-xy (x y font-obj)
-  (setf (font-x font-obj) x)
-  (setf (font-y font-obj) y))
+;;; 以下の関数は、全て *current-font* を対象に実行される。
+;;; 先に set-current-font しておくこと。
+;;; 例: (set-current-font *gothic16*)
+
+(defmacro set-current-font (f)
+  `(setf *current-font* ,f))
+
+;;; *current-font*のカーソル位置を(x,y)に設定する。
+(defun goto-xy (x y)
+  (setf (font-x *current-font*) x)
+  (setf (font-y *current-font*) y))
 
 ;;; フォントオブジェクトのカーソルXを、letterに応じて半角/全角分だけ移動させる。
-(defun next-x (letter font-obj)
-  (let ((next-width (gethash letter (font-width-table font-obj))))
-    (if (= next-width (font-size font-obj))
-	(setf (font-x font-obj) (+ (font-x font-obj) 2))
-	(setf (font-x font-obj) (+ (font-x font-obj) 1)))))
+(defun next-x (letter)
+  (let ((next-width (gethash letter (font-width-table *current-font*))))
+    (if (= next-width (font-size *current-font*))
+	(setf (font-x *current-font*) (+ (font-x *current-font*) 2))
+	(setf (font-x *current-font*) (+ (font-x *current-font*) 1)))))
 
 ;;;; カーソル座標 -> 画面座標の変換
 ;;;; 注意!： カーソルのX座標は、半角単位で指定する。
 ;;;; 表示する文字種によって、自動的に半角/全角に応じたカーソル座標を加算する。
 ;;;; そのため、X=(* font-x font-half-size), Y=(* font-y font-size)となる。
-(defun x-pixel (font-obj)
-  (* (font-x font-obj) (font-half-size font-obj)))
+(defmacro x-pixel (f)
+  `(* (font-x ,f) (font-half-size ,f)))
 
-(defun y-pixel (font-obj)
-  (* (font-y font-obj) (font-size font-obj)))
+(defmacro y-pixel (f)
+  `(* (font-y ,f) (font-size ,f)))
 
+;;;; 現在の*current-font*のカーソル位置を画面上のピクセルに変更して、
+;;;; (x y)のリストにして返す。
+;;;; 使いかた：
+;;;;    (goto-xy x y font-obj)
+;;;;    (xy-pixel) -> 返り値に(x-pixel y-pixel)が返る。
 
+(defun xy-pixel ()
+  (list (x-pixel *current-font*) (y-pixel *current-font*)))
+		 
 ;;; 文字/文字列表示の本体
-(defun draw-letter (letter font-obj)
-  (sdl:draw-surface-at-* (font-img font-obj)
-			 (x-pixel font-obj)
-			 (y-pixel font-obj)
+(defun draw-letter (letter)
+  (sdl:draw-surface-at-* (font-img *current-font*)
+			 (x-pixel  *current-font*)
+			 (y-pixel  *current-font*)
 			 :cell (gethash letter *font-table*))
-  (next-x letter font-obj))
+  (next-x letter))
 
-(defmethod draw-string (str font-obj)
+(defmethod draw-string (str)
   (dolist (c (concatenate 'list str))
-    (draw-letter c font-obj)))
+    (draw-letter c)))
 
 ;;;;
 ;;;;
@@ -163,32 +177,6 @@
 (defun initialize-fonts ()
   (set-font-table)
   (setf *gothic16* (make-font-obj "Gothic16.png" 16))
-  (setf *gothic32* (make-font-obj "Gothic32.png" 32)))
+  (setf *gothic32* (make-font-obj "Gothic32.png" 32))
 
-
-
-
-
-;;;
-;; (defun main ()
-;;   (set-font-table)
-;;   (sdl:with-init ()
-;;     (sdl:window 640 480)
-
-;;     (setf *gothic16* (make-font-obj "Gothic16.png" 16))
- 
-;;     (setf (sdl:frame-rate) 60)
-;;     (sdl:update-display)
-
-;;     (sdl:with-events ()
-;;       (:quit-event () t)
-;;       (:key-down-event
-;;        (:key key)
-;;        (when (sdl:key= key :sdl-key-escape)
-;; 	 (sdl:push-quit-event)))
-;;       (:idle ()
-;; 	     (sdl:clear-display sdl:*white*)
-;; 	     (goto-xy 2 4 *gothic16*)
-;; 	     (draw-string "abcdefg12345678!@#$%^&*()_+|~" *gothic16*)
-;; 	     (sdl:update-display)))))
-
+  (setf *current-font* *gothic16*))  ; デフォルトフォントは Gothic16

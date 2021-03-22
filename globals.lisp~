@@ -7,6 +7,7 @@
 
 ;;; GAME CONTROL
 (defparameter *quit-game* nil)
+(defparameter *game-mode* :title)
 (defparameter *counter* 0)
 (defparameter *cursor-x* 1)
 

@@ -4,7 +4,7 @@
 ;;; Windowの準備とスプライトオブジェクトの作成
 
   (sdl:window 640 480 :title-caption "Dungeon Walker")
-  (sdl:fill-surface sdl:*blue* :surface sdl:*default-display*)
+  (fill-screen sdl:*black*)
   (setf (sdl:frame-rate) 30)
   (sdl:update-display)
 
