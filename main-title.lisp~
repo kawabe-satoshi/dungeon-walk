@@ -2,14 +2,28 @@
 
 (defun draw-main-title ()
   (fill-screen sdl:*white*)
+<<<<<<< HEAD
   (center-caption "[ M A I N  T I T L E ]")
+=======
+  (draw-horizontal-line 9 "-")
+  (goto-xy 10 10)
+  (draw-string "[M A I N   T I T L E]")
+  (draw-horizontal-line 11 "-")
+  (goto-xy 1 1)
+  (sdl:update-display)
+>>>>>>> 7efdf1a0b227bbe7f33f6241a507b1e5618dbe4d
   (print "draw-main-title"))
 
 (defun main-title ()
   (print "main-title")
+<<<<<<< HEAD
   (fill-screen sdl:*white*)
   (sdl:update-display)
   (draw-main-title)
   (loop-until-pressed-any-key)
+=======
+  (draw-main-title)
+  (loop-until-pressed :sdl-key-escape)
+>>>>>>> 7efdf1a0b227bbe7f33f6241a507b1e5618dbe4d
   (setf *game-mode* :castle))
 

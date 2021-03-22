@@ -1,7 +1,16 @@
 (defun draw-main-menu-*castle* ()
+<<<<<<< HEAD
   (both-side-caption "C A S T L E" "Adventure's INN")
   (goto-xy 0 21)
   (draw-string "[ESC] or L)eave")
+=======
+  (goto-xy 0 0 *gothic16*)
+  (draw-string "C A S T L E" *gothic16*)
+  (goto-xy 0 20 *gothic16*)
+  (draw-string "A)dventure's Inn" *gothic16*)
+  (goto-xy 0 21 *gothic16*)
+  (draw-string "[ESC] or L)eave" *gothic16*)
+>>>>>>> 7efdf1a0b227bbe7f33f6241a507b1e5618dbe4d
   (sdl:update-display))
 
 (defun keydown-castle (k)
@@ -10,7 +19,11 @@
     (sdl:push-quit-event)))
   
 (defun castle-main ()
+<<<<<<< HEAD
   (fill-screen sdl:*white*)
+=======
+  (fill-screen sdl:*blue*)
+>>>>>>> 7efdf1a0b227bbe7f33f6241a507b1e5618dbe4d
   (draw-main-menu-*castle*)
   (loop 
      (sdl:with-events ()

@@ -26,18 +26,3 @@
      (sdl:update-display))))
 
 
-(defun keydown-castle (k)
-  (when (sdl:key= k :sdl-key-escape)
-    (progn
-      (setf *game-mode* :main-title)
-      (sdl:push-quit-event))))
-  
-(defun castle-main ()
-  (fill-screen sdl:*white*)
-  (draw-main-menu-castle)
-  (sdl:with-events ()
-    (:quit-event () t)
-    (:key-down-event (:key key)
-		     (keydown-castle key))
-    (:idle
-     (sdl:update-display))))
